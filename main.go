@@ -27,9 +27,11 @@ func main() {
 	ExitIfErr(err)
 
 	// use goroutine to output
-	command.Start()
+	err = command.Start()
 	go io.Copy(os.Stdout, pipe)
 	command.Wait()
+
+	ExitIfErr(err)
 }
 
 func ExitIfErr(err error) {
