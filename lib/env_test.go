@@ -37,10 +37,10 @@ func Test_Simple_Parseln(t *testing.T) {
 	}
 }
 
-func Test_Parse(t *testing.T) {
+func Test_Load(t *testing.T) {
 	buf := bytes.NewBufferString("PORT=9090\nMARTINI_ENV=dev\nHELLO='world'")
 
-	err := Parse(buf)
+	err := Load(buf)
 	expect(t, fmt.Sprint(err), NIL)
 	expect(t, os.Getenv("PORT"), "9090")
 	expect(t, os.Getenv("MARTINI_ENV"), "dev")

@@ -13,8 +13,8 @@ func main() {
 	file, err := os.Open(".env")
 	ExitIfErr(err)
 
-	// parse dat file and put stuff in env
-	envy.Parse(file)
+	// parse file and bootstrap the env
+	envy.Load(file)
 
 	// execute a command
 	args := os.Args[1:]

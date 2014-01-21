@@ -22,8 +22,7 @@ func Parseln(line string) (key string, val string, err error) {
 }
 
 // Loads a reader into the environment using Parseln
-func Parse(reader io.Reader) error {
-	// 1. read each line
+func Load(reader io.Reader) error {
 	r := bufio.NewReader(reader)
 
 	for {
@@ -40,7 +39,5 @@ func Parse(reader io.Reader) error {
 		os.Setenv(key, val)
 	}
 
-	// 2. Invoke parseln on each line
-	// 3. insert into the env AKA (os.Setenv(key, val))
 	return nil
 }
