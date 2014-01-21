@@ -23,12 +23,16 @@ func main() {
 	}
 
 	command := exec.Command(args[0], args[1:]...)
-	pipe, err := command.StdoutPipe()
+	stdout, err := command.StdoutPipe()
+	ExitIfErr(err)
+
+	stderr, err := command.StderrPipe()
 	ExitIfErr(err)
 
 	// use goroutine to output
 	err = command.Start()
-	go io.Copy(os.Stdout, pipe)
+	go io.Copy(os.Stdout, stdout)
+	go io.Copy(os.Stderr, stderr)
 	command.Wait()
 
 	ExitIfErr(err)
