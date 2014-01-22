@@ -9,12 +9,8 @@ import (
 )
 
 func main() {
-	// load a file from the args list
-	file, err := os.Open(".env")
-	ExitIfErr(err)
-
-	// parse file and bootstrap the env
-	envy.Load(file)
+	// Bootstrap the environment
+	envy.Bootstrap()
 
 	// execute a command
 	args := os.Args[1:]

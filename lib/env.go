@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func Parseln(line string) (key string, val string, err error) {
+func parseln(line string) (key string, val string, err error) {
 	splits := strings.Split(line, "=")
 
 	if len(splits) < 2 {
@@ -21,7 +21,22 @@ func Parseln(line string) (key string, val string, err error) {
 	return key, val, nil
 }
 
-// Loads a reader into the environment using Parseln
+// Bootstrap loads a .env file into the current environment using envy.Load
+func Bootstrap() error {
+	file, err := os.Open(".env")
+	if err != nil {
+		return err
+	}
+
+	err = Load(file)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Load parses lines of a reader in the .env format.
 func Load(reader io.Reader) error {
 	r := bufio.NewReader(reader)
 
@@ -31,7 +46,7 @@ func Load(reader io.Reader) error {
 			break
 		}
 
-		key, val, err := Parseln(string(line))
+		key, val, err := parseln(string(line))
 		if err != nil {
 			return err
 		}

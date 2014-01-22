@@ -30,7 +30,7 @@ var parselnTests = []struct {
 
 func Test_Simple_Parseln(t *testing.T) {
 	for _, tt := range parselnTests {
-		key, val, err := Parseln(tt.in)
+		key, val, err := parseln(tt.in)
 		expect(t, key, tt.key)
 		expect(t, val, tt.val)
 		expect(t, fmt.Sprint(err), tt.err)
