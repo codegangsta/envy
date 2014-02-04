@@ -40,11 +40,21 @@ func Test_Simple_Parseln(t *testing.T) {
 func Test_Load(t *testing.T) {
 	buf := bytes.NewBufferString("PORT=9090\nMARTINI_ENV=dev\nHELLO='world'")
 
-	err := Load(buf)
+	_, err := Load(buf)
 	expect(t, fmt.Sprint(err), NIL)
 	expect(t, os.Getenv("PORT"), "9090")
 	expect(t, os.Getenv("MARTINI_ENV"), "dev")
 	expect(t, os.Getenv("HELLO"), "world")
+}
+
+func Test_Env(t *testing.T) {
+	buf := bytes.NewBufferString("PORT=9090\nMARTINI_ENV=dev\nHELLO='world'")
+
+	env, err := Load(buf)
+	expect(t, fmt.Sprint(err), NIL)
+	expect(t, env["PORT"], "9090")
+	expect(t, env["MARTINI_ENV"], "dev")
+	expect(t, env["HELLO"], "world")
 }
 
 /* Test Helpers */

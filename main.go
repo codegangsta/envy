@@ -10,28 +10,32 @@ import (
 
 func main() {
 	// Bootstrap the environment
-	envy.Bootstrap()
+	env, err := envy.Bootstrap()
+	ExitIfErr(err)
 
-	// execute a command
 	args := os.Args[1:]
 	if len(args) == 0 {
-		Exit("too few arguments")
+		for k, v := range env {
+			fmt.Fprintf(os.Stdout, "%s=%s\n", k, v)
+		}
+	} else {
+		// execute a command
+		command := exec.Command(args[0], args[1:]...)
+		stdout, err := command.StdoutPipe()
+		ExitIfErr(err)
+
+		stderr, err := command.StderrPipe()
+		ExitIfErr(err)
+
+		// use goroutine to output
+		err = command.Start()
+		go io.Copy(os.Stdout, stdout)
+		go io.Copy(os.Stderr, stderr)
+		command.Wait()
+
+		ExitIfErr(err)
 	}
 
-	command := exec.Command(args[0], args[1:]...)
-	stdout, err := command.StdoutPipe()
-	ExitIfErr(err)
-
-	stderr, err := command.StderrPipe()
-	ExitIfErr(err)
-
-	// use goroutine to output
-	err = command.Start()
-	go io.Copy(os.Stdout, stdout)
-	go io.Copy(os.Stderr, stderr)
-	command.Wait()
-
-	ExitIfErr(err)
 }
 
 func ExitIfErr(err error) {
