@@ -26,6 +26,7 @@ var parselnTests = []struct {
 	{`PORT="9090"`, "PORT", "9090", NIL},
 	{`PORT='9090'`, "PORT", "9090", NIL},
 	{"PORT= 9090", "PORT", "9090", NIL},
+	{"URL=postgres://localhost?option=1", "URL", "postgres://localhost?option=1", NIL},
 }
 
 func Test_Simple_Parseln(t *testing.T) {

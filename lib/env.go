@@ -45,7 +45,7 @@ func Load(reader io.Reader) (Env, error) {
 }
 
 func parseln(line string) (key string, val string, err error) {
-	splits := strings.Split(line, "=")
+	splits := strings.SplitN(line, "=", 2)
 
 	if len(splits) < 2 {
 		return "", "", errors.New("missing delimiter '='")
