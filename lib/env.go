@@ -11,6 +11,17 @@ import (
 // Env represents the values parsed from the .env file
 type Env map[string]string
 
+// MustGet looks up the value for the given environment variable. It panics
+// If the value is an empty string.
+func MustGet(key string) string {
+	v := os.Getenv(key)
+	if v == "" {
+		panic("Environment variable " + key + " does not exist.")
+	}
+
+	return v
+}
+
 // Bootstrap loads a .env file into the current environment using envy.Load
 func Bootstrap() (Env, error) {
 	file, err := os.Open(".env")

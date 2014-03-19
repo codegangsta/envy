@@ -58,6 +58,24 @@ func Test_Env(t *testing.T) {
 	expect(t, env["HELLO"], "world")
 }
 
+func Test_MustGet(t *testing.T) {
+	os.Setenv("FOO_BAR", "batbaz")
+	os.Setenv("NOT_HERE", "")
+
+	func() {
+		defer func() {
+			if err := recover(); err == nil {
+				t.Error("Expected a panic")
+			}
+		}()
+
+		MustGet("NOT_HERE")
+	}()
+
+	f := MustGet("FOO_BAR")
+	expect(t, f, "batbaz")
+}
+
 /* Test Helpers */
 func expect(t *testing.T, a interface{}, b interface{}) {
 	if a != b {
