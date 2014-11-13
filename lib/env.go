@@ -56,14 +56,15 @@ func Load(reader io.Reader) (Env, error) {
 }
 
 func parseln(line string) (key string, val string, err error) {
+        if len(line) == 0 { return "", "", nil}
 	splits := strings.SplitN(line, "=", 2)
 
-	if len(splits) < 2 {
-		return "", "", errors.New("missing delimiter '='")
+        if len(splits) < 2 {
+   	       return "", "", errors.New("missing delimiter '='")
 	}
 
 	key = strings.Trim(splits[0], " ")
 	val = strings.Trim(splits[1], ` "'`)
 
-	return key, val, nil
+        return key, val, nil
 }

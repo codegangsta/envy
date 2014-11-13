@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/codegangsta/envy/lib"
+	"github.com/rippinrobr/envy/lib"
 	"io"
 	"os"
 	"os/exec"
@@ -15,8 +15,10 @@ func main() {
 
 	args := os.Args[1:]
 	if len(args) == 0 {
-		for k, v := range env {
-			fmt.Fprintf(os.Stdout, "%s=%s\n", k, v)
+		for k, v := range env {	
+		        if k != "" {
+			  fmt.Fprintf(os.Stdout, "%s=%s\n", k, v)
+                        }
 		}
 	} else {
 		// execute a command
