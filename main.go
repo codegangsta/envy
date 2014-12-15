@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/rippinrobr/envy/lib"
+	"github.com/codegangsta/envy/lib"
 	"io"
 	"os"
 	"os/exec"
