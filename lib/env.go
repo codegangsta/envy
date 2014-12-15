@@ -56,6 +56,9 @@ func Load(reader io.Reader) (Env, error) {
 }
 
 func parseln(line string) (key string, val string, err error) {
+	if len(line) == 0 {
+		return "", "", nil
+	}
 	splits := strings.SplitN(line, "=", 2)
 
 	if len(splits) < 2 {

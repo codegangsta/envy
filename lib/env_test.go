@@ -22,6 +22,7 @@ var parselnTests = []struct {
 }{
 	{"PORT=9090", "PORT", "9090", NIL},
 	{"PORT9090", "", "", "missing delimiter '='"},
+	{"", "", "", NIL},
 	{"PORT =9090", "PORT", "9090", NIL},
 	{`PORT="9090"`, "PORT", "9090", NIL},
 	{`PORT='9090'`, "PORT", "9090", NIL},
