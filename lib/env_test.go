@@ -23,6 +23,8 @@ var parselnTests = []struct {
 	{"PORT=9090", "PORT", "9090", NIL},
 	{"PORT9090", "", "", "missing delimiter '='"},
 	{"", "", "", NIL},
+	{"# A comment line", "", "", NIL},
+        {"MYVAR=2020", "MYVAR", "2020", NIL},
 	{"PORT =9090", "PORT", "9090", NIL},
 	{`PORT="9090"`, "PORT", "9090", NIL},
 	{`PORT='9090'`, "PORT", "9090", NIL},

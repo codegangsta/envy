@@ -55,7 +55,20 @@ func Load(reader io.Reader) (Env, error) {
 	return env, nil
 }
 
+func removeComments(s string) string {
+	if s == "" || string(s[0]) == "#" {
+		return ""
+	} else {
+		index := strings.Index(s, " #")
+		if index > -1 {
+			s = strings.TrimSpace(s[0:index])
+		}
+	}
+	return s
+}
+
 func parseln(line string) (key string, val string, err error) {
+	line = removeComments(line)
 	if len(line) == 0 {
 		return "", "", nil
 	}
